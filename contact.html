@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Registration | Uma Musume Portal</title>
+    <meta name="description" content="Apply for your official Tracen Academy Trainer certification badge here.">
+    
+    <!-- Stable fallback layout stylesheet -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        :root {
+            --umaPink: #ff6b81; 
+            --umaBg: #f5f6fa;
+            --cardRed: #eb4d4b;
+            --cardOrange: #e67e22;
+        }
+        
+        body { 
+            /* MATCHES THE ENHANCED BACKGROUND SCAN SPECIFICATIONS PERFECTLY */
+            background-image: url('wallpaper2.jpg') !important;
+            background-size: 100% 100% !important; 
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+            
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; 
+            margin: 0; 
+            padding: 0;
+            
+            height: 100vh !important;
+            max-height: 100vh !important;
+            overflow: hidden !important; 
+            display: grid !important;
+            grid-template-rows: auto 1fr auto !important; 
+        }
+        
+        header { 
+            background-color: var(--umaPink) !important; 
+            color: white !important; 
+            padding: 1rem 5% !important; 
+            border: none !important; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 50;
+        }
+        
+        header a, header h2 { color: white !important; text-decoration: none !important; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; padding: 0; margin: 0; }
+        
+        /* MATCHES THE EXACT HIGH-TRANSPARENCY FROSTED RATIOS */
+        .main-container { 
+            max-width: 600px; 
+            width: 90%; 
+            margin: 2rem auto !important; 
+            background-color: rgba(255, 255, 255, 0.75) !important; 
+            backdrop-filter: blur(12px) saturate(120%); 
+            padding: 2.5rem !important;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-sizing: border-box;
+            
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; 
+            height: calc(100% - 4rem); 
+        }
+        
+        .main-container::-webkit-scrollbar { width: 6px; }
+        .main-container::-webkit-scrollbar-thumb { background: var(--umaPink); border-radius: 10px; }
+        
+        /* INPUT CONTROL ELEMENT RULES */
+        input[type="text"], input[type="email"], textarea { 
+            width: 100% !important; 
+            padding: 0.75rem !important; 
+            border: 1px solid #cbd5e1 !important; 
+            border-radius: 8px !important; 
+            background: rgba(255, 255, 255, 0.9) !important; 
+            color: #1e293b !important;
+            box-sizing: border-box !important;
+            margin: 0 !important;
+            font-size: 0.95rem !important;
+        }
+        input:focus, textarea:focus {
+            outline: none !important;
+            border-color: var(--umaPink) !important;
+            box-shadow: 0 0 0 3px rgba(255, 107, 129, 0.15) !important;
+        }
+        
+        /* Red error verification layout panels (Hidden by default) */
+        .error-msg { 
+            color: var(--cardRed); 
+            font-size: 0.8rem; 
+            margin-top: 0.35rem; 
+            display: none; 
+            font-weight: bold; 
+        }
+        
+        .submit-btn { 
+            width: 100%; 
+            background: var(--umaPink) !important; 
+            color: white !important; 
+            border: none !important; 
+            padding: 0.9rem !important; 
+            border-radius: 9999px !important; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 1rem; 
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.25);
+            transition: transform 0.2s ease;
+        }
+        .submit-btn:hover { transform: translateY(-2px); }
+        
+        footer { 
+            background-color: var(--umaPink) !important; 
+            color: white !important; 
+            text-align: center; 
+            padding: 1rem !important; 
+            font-size: 0.8rem; 
+            width: 100%;
+            border: none !important;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        
+        .menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            body { overflow: auto !important; height: auto !important; max-height: none !important; display: flex !important; flex-direction: column !important; background-size: cover !important; } 
+            .main-container { overflow: visible; height: auto !important; margin: 1rem auto !important; padding: 1.5rem !important; }
+            .menu-btn { display: block; }
+            .nav-container { display: none; width: 100%; }
+            .nav-container.show { display: block; }
+            .nav-links { flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+            header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="row">
+        <div class="col-sm-12 col-md flex-stretch" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h2 style="margin: 0; font-weight: 800;">Argon Sevs Training Portal</h2>
+            <button class="menu-btn" id="menuToggle">☰</button>
+        </div>
+        <div class="col-sm-12 col-md nav-container" id="navMenu" style="display: flex; align-items: center; justify-content: flex-end; gap: 2rem;">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="roster.html">Horse Girls</a></li>
+                    <li><a href="contact.html" style="border-bottom: 2px solid white; font-weight: bold;">Join Club</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div style="background: rgba(255, 255, 255, 0.4); padding: 1.5rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.5); margin-bottom: 1.5rem; text-align: center;">
+            <h2 style="font-weight: 900; color: #111; margin: 0 0 0.3rem 0; font-size: 1.8rem; tracking-tight;">Trainer Application</h2>
+            <p style="color: #4a5568; font-size: 0.88rem; margin: 0; line-height: 1.5;">Apply for your official Tracen Academy certification badge access below.</p>
+        </div>
+        
+        <!-- APPLICATION INPUT CARD LAYOUT (novalidate stops lazy default browser errors) -->
+        <form id="contactForm" novalidate style="display: flex; flex-direction: column; gap: 1.25rem; flex: 1;">
+            <div>
+                <label style="display:block; font-weight: 700; margin-bottom: 0.4rem; font-size: 0.9rem; color: #334155;">Trainer Name</label>
+                <input type="text" id="name" autocomplete="off" placeholder="Enter your official badge handle...">
+                <span class="error-msg" id="nameError">Trainer name must be at least 3 characters long.</span>
+            </div>
+            
+            <div>
+                <label style="display:block; font-weight: 700; margin-bottom: 0.4rem; font-size: 0.9rem; color: #334155;">Academy Email Address</label>
+                <input type="email" id="email" autocomplete="off" placeholder="example@tracen.edu">
+                <span class="error-msg" id="emailError">Please enter a valid Tracen Academy email address.</span>
+            </div>
+            
+            <div>
+                <label style="display:block; font-weight: 700; margin-bottom: 0.4rem; font-size: 0.9rem; color: #334155;">Training Philosophy Approach</label>
+                <textarea id="message" rows="4" placeholder="How do you plan to curate workouts for Front-Runners or End-Closers?"></textarea>
+                <span class="error-msg" id="messageError">Strategy approach statement must be at least 10 characters long.</span>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Application</button>
+            
+            <!-- Success Notification Banner Prompt Window (Hidden until verification clear) -->
+            <div id="successPrompt" style="display: none; background: #e1f7ec; color: #2ecc71; border: 1px solid #2ecc71; padding: 1rem; text-align: center; font-weight: bold; border-radius: 8px; font-size: 0.95rem; margin-top: 0.5rem; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.15);">
+                Application submitted successfully! Good luck at the URA Finals!
+            </div>
+        </form>
+    </main>
+
+    <!-- SOLID BASE SYSTEM FOOTER -->
+    <footer>
+        <p style="margin: 0; padding: 0; color: white !important; font-weight: 600; letter-spacing: 0.5px;">&copy; <span id="currentYear"></span> UmaMusume Fan Database.</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    
+    <!-- Forced Inline Interactive Form Validation Engine Injection -->
+    <script>
+        (function() {
+            const yearSpan = document.getElementById("currentYear");
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Mobile Navigation Toggle Controller Menu Action
+            const menuToggle = document.getElementById("menuToggle");
+            const navMenu = document.getElementById("navMenu");
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener("click", function() {
+                    navMenu.classList.toggle("show");
+                    menuToggle.textContent = navMenu.classList.contains("show") ? "✕" : "☰";
+                });
+            }
+
+            // DYNAMIC JAVASCRIPT REGISTRATION VALIDATION ENGINE BLOCK
+            const contactForm = document.getElementById("contactForm");
+            if (contactForm) {
+                contactForm.addEventListener("submit", function(e) {
+                    e.preventDefault(); // Stop clunky default page refreshing triggers
+                    let isValid = true;
+
+                    // 1. Trainer Name Length Validation Check
+                    const nameInput = document.getElementById("name");
+                    const nameError = document.getElementById("nameError");
+                    if (nameInput.value.trim().length < 3) {
+                        nameError.style.display = "block";
+                        nameInput.style.borderColor = "var(--cardRed)";
+                        isValid = false;
+                    } else {
+                        nameError.style.display = "none";
+                        nameInput.style.borderColor = "#cbd5e1";
+                    }
+
+                    // 2. Academy Email Pattern Match (Regex Evaluation Engine)
+                    const emailInput = document.getElementById("email");
+                    const emailError = document.getElementById("emailError");
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Standard layout address sequence verification formula
+                    if (!emailRegex.test(emailInput.value.trim())) {
+                        emailError.style.display = "block";
+                        emailInput.style.borderColor = "var(--cardRed)";
+                        isValid = false;
+                    } else {
+                        emailError.style.display = "none";
+                        emailInput.style.borderColor = "#cbd5e1";
+                    }
+
+                    // 3. Strategy Approach Statement Length Validation Check
+                    const messageInput = document.getElementById("message");
+                    const messageError = document.getElementById("messageError");
+                    if (messageInput.value.trim().length < 10) {
+                        messageError.style.display = "block";
+                        messageInput.style.borderColor = "var(--cardRed)";
+                        isValid = false;
+                    } else {
+                        messageError.style.display = "none";
+                        messageInput.style.borderColor = "#cbd5e1";
+                    }
+
+                    // Execution routine upon confirmation clearance
+                    if (isValid) {
+                        const successPrompt = document.getElementById("successPrompt");
+                        successPrompt.style.display = "block";
+                        contactForm.reset(); // Wipe values from fields cleanly
+                        
+                        // Drop notification toast banner automatically after 4 seconds block length loop
+                        setTimeout(function() { 
+                            successPrompt.style.display = "none"; 
+                        }, 4000);
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

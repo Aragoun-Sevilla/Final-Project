@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Tracen Academy | Uma Musume Portal</title>
+    <meta name="description" content="Discover the general background, mission, vision, and training curriculum of Tracen Academy.">
+    
+    <!-- Stable fallback layout stylesheet -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        :root {
+            --umaPink: #ff6b81; 
+            --umaBg: #f5f6fa;
+            --cardRed: #eb4d4b;
+            --cardYellow: #f1c40f;
+            --cardOrange: #e67e22;
+            --cardRose: #ff7675;
+            --cardPurple: #6c5ce7;
+        }
+        
+        body { 
+            /* BACKGROUND CORRECTION: Auto-fits the wallpaper precisely to screen borders with no background spillouts */
+            background-image: url('wallpaper4.jpg') !important;
+            background-size: 100% 100% !important; /* Forces the artwork to stay fully contained and fit within the viewport */
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+            
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; 
+            margin: 0; 
+            padding: 0;
+            
+            height: 100vh !important;
+            max-height: 100vh !important;
+            overflow: hidden !important; 
+            display: grid !important;
+            grid-template-rows: auto 1fr auto !important; 
+        }
+        
+        header { 
+            background-color: var(--umaPink) !important; 
+            color: white !important; 
+            padding: 1rem 5% !important; 
+            border: none !important; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 50;
+        }
+        
+        header a, header h2 { color: white !important; text-decoration: none !important; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; padding: 0; margin: 0; }
+        
+        /* CONTAINER OPACITY FIX: Reduced from 0.92 down to 0.75 for a more transparent frosted design look */
+        .main-container { 
+            max-width: 1100px; 
+            width: 95%; 
+            margin: 1rem auto !important; 
+            background-color: rgba(255, 255, 255, 0.75) !important; /* Higher transparency value lets more wallpaper artwork bleed through */
+            backdrop-filter: blur(12px) saturate(120%); /* Increased blur saturation to keep text highly contrast-readable against wallpaper layers */
+            padding: 2.5rem !important;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-sizing: border-box;
+            
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; 
+            height: calc(100% - 2rem); 
+        }
+        
+        .main-container::-webkit-scrollbar { width: 8px; }
+        .main-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); border-radius: 10px; }
+        .main-container::-webkit-scrollbar-thumb { background: var(--umaPink); border-radius: 10px; }
+        
+        .statement-box {
+            background: rgba(255, 255, 255, 0.85) !important; /* Slightly softened sub-boxes to complement main panel opacity */
+            border-radius: 16px !important;
+            padding: 2rem !important;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 2rem;
+            flex-shrink: 0;
+        }
+        .statement-title { font-size: 1.6rem; font-weight: 900; color: #111; margin: 0 0 0.75rem 0; border-bottom: 3px solid var(--umaPink); display: inline-block; padding-bottom: 2px; }
+        .statement-text { font-size: 1.05rem; color: #1e293b; font-weight: 500; line-height: 1.7; margin-bottom: 1.5rem; }
+        
+        .master-accordion {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--umaPink);
+            background: white;
+            box-shadow: 0 6px 20px rgba(255, 107, 129, 0.1);
+            flex-shrink: 0;
+        }
+        
+        .master-header {
+            width: 100%;
+            padding: 1.5rem;
+            text-align: left;
+            background: var(--umaPink);
+            color: white !important;
+            border: none !important;
+            margin: 0 !important;
+            font-size: 1.4rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+        .master-header:hover { opacity: 0.95; }
+        .master-icon { font-size: 1.2rem; transition: transform 0.2s ease; color: white; }
+        
+        .master-content {
+            display: none; 
+            padding: 2rem 1.5rem;
+            background: rgba(250, 250, 250, 0.9);
+            flex-direction: column;
+            gap: 3.5rem;
+        }
+        
+        .zigzag-row {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            width: 100%;
+        }
+        .zigzag-row.reverse { flex-direction: row-reverse; }
+        
+        .info-side { flex: 1.3; display: flex; flex-direction: column; justify-content: center; }
+        .module-title { font-size: 1.6rem; font-weight: 900; margin: 0 0 0.5rem 0; }
+        .module-text { font-size: 0.98rem; color: #334155; font-weight: 500; line-height: 1.6; margin: 0 0 1rem 0; }
+        
+        .image-side {
+            flex: 1;
+            min-width: 260px;
+            max-width: 260px;
+            height: 340px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            background: white;
+        }
+        .image-side img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .stat-list { list-style-type: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+        .stat-list li { background: white; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; color: #475569; border: 1px solid #e2e8f0; }
+        
+        .route-panel-btn {
+            background-color: var(--umaPink) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 9999px !important;
+            padding: 0.75rem 2rem !important;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none !important;
+            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.25);
+            transition: transform 0.2s ease;
+        }
+        .route-panel-btn:hover { transform: translateY(-2px); }
+        
+        footer { 
+            background-color: var(--umaPink) !important; 
+            color: white !important; 
+            text-align: center; 
+            padding: 1rem !important; 
+            font-size: 0.8rem; 
+            width: 100%;
+            border: none !important;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        
+        .menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        
+        @media (max-width: 850px) {
+            .zigzag-row, .zigzag-row.reverse { flex-direction: column !important; gap: 1.5rem; }
+            .image-side { max-width: 100%; width: 100%; height: 300px; }
+            .info-side { text-align: left; }
+            .master-content { gap: 4rem; }
+        }
+        @media (max-width: 768px) {
+            body { overflow: auto !important; height: auto !important; max-height: none !important; display: flex !important; flex-direction: column !important; background-size: cover !important; } 
+            .main-container { overflow: visible; height: auto !important; margin: 1rem auto !important; padding: 1.5rem !important; }
+            .menu-btn { display: block; }
+            .nav-container { display: none; width: 100%; }
+            .nav-container.show { display: block; }
+            .nav-links { flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+            header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <header class="row">
+        <div class="col-sm-12 col-md flex-stretch" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h2 style="margin: 0; font-weight: 800;">Argon Sevs Training Portal</h2>
+            <button class="menu-btn" id="menuToggle">☰</button>
+        </div>
+        <div class="col-sm-12 col-md nav-container" id="navMenu" style="display: flex; align-items: center; justify-content: flex-end; gap: 2rem;">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" style="border-bottom: 2px solid white; font-weight: bold;">About</a></li>
+                    <li><a href="roster.html">Horse Girls</a></li>
+                    <li><a href="contact.html">Join Club</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+     <main class="main-container">
+        
+        <!-- TRACEN SUMMARY OVERVIEW CARD -->
+        <div class="statement-box" style="border-left: 6px solid var(--umaPink);">
+            <h2 class="statement-title" style="border-bottom:none; font-size: 2.2rem; margin-bottom: 0.5rem;">Tracen Academy Summary</h2>
+            <p style="color:#777; font-size: 0.9rem; margin: 0 0 1.25rem 0; font-weight: bold; uppercase; tracking-wider;">Nihon Kiyouin Training Center Facility Dossier</p>
+            <p class="statement-text">
+                The Nihon Kiyouin Training Center (widely recognized as Tracen Academy) is a legendary, world-class educational facility built explicitly to foster the athletic development and theatrical performance styles of elite horse girls. 
+            </p>
+            <p class="statement-text" style="margin-bottom: 0;">
+                Our training campus bridges standard high-school academic curriculum with intense high-performance attribute tracking. Equipped with cutting-edge turf track loops, weight simulation centers, and dedicated vocal guidance mirrors, we ensure every runner is fully prepared to cross the G1 racing finish line before stealing the theater spotlights during post-race Winning Live concerts.
+            </p>
+        </div>
+        
+        <!-- MISSION & VISION STATEMENT PANELS -->
+        <div class="statement-box">
+            <h2 class="statement-title">Our Mission</h2>
+            <p class="statement-text">
+                At Tracen Academy, our mission is to provide an elite educational and athletic ecosystem where horse girls can cultivate their innate gifts. By balancing premium scholastic learning with cutting-edge track regimens, we equip our competitors to capture historic G1 racing crowns while developing the artistic vocal performance skills needed to command the global entertainment stage.
+            </p>
+            
+            <h2 class="statement-title" style="border-color: var(--cardOrange);">Our Vision</h2>
+            <p class="statement-text" style="margin-bottom: 0;">
+                We envision a unified community of strategic excellence where trainers and horse girls work hand-in-hand to redefine racing history. Through modern facility diagnostic frameworks, data-driven optimization, and healthy competitive tracking, we aim to remain the world's leading training grounds for developing historic Twinkle Series champions.
+            </p>
+        </div>
+
+        <!-- TRAINING CURRICULUM MAIN DROP DOWN ACCORDION BOX -->
+        <div class="master-accordion">
+            <button class="master-header" id="masterDropdownBtn">
+                <span>📋 View Training Curriculum</span>
+                <span class="master-icon" id="masterIcon">▼</span>
+            </button>
+            
+            <!-- EXPANSIBLE WORKSPACE MATRIX -->
+            <div class="master-content" id="masterDropdownContent">
+                
+                <!-- 1. SPEED -->
+                <div class="zigzag-row">
+                    <div class="info-side" style="border-left: 5px solid var(--cardRed); padding-left: 1.25rem;">
+                        <h3 class="module-title" style="color: var(--cardRed);">🏃 Speed Training (スピード)</h3>
+                        <p class="module-text">
+                            Directly calculates your competitor's absolute top terminal velocity during straight-away segments. Maximizing this attribute is crucial for front-running pacing configurations, allowing runners to gain ground early and hold their position through crowded packs.
+                        </p>
+                        <ul class="stat-list">
+                            <li>Primary Target: Top Speed Capacity</li>
+                            <li>Secondary Gain: +Power Sub-points</li>
+                        </ul>
+                    </div>
+                    <div class="image-side"><img src="speed.jpg" alt="Speed Training Custom Artwork Panel"></div>
+                </div>
+
+                <!-- 2. STAMINA (REVERSED) -->
+                <div class="zigzag-row reverse">
+                    <div class="info-side" style="border-right: 5px solid var(--cardYellow); padding-right: 1.25rem; text-align: right;">
+                        <h3 class="module-title" style="color: var(--cardYellow);">🔋 Stamina Training (スタミナ)</h3>
+                        <p class="module-text">
+                            Stamina values dictate the total engine fuel and endurance reserves available to your runner. Without adequate stamina investment, horse girls are highly vulnerable to dropping their speed tier rapidly or gasping for air long before approaching the final stretch.
+                        </p>
+                        <ul class="stat-list" style="align-items: flex-end;">
+                            <li>Primary Target: Endurance Capacity & Fuel Pool</li>
+                            <li>Secondary Gain: +Guts Sub-points</li>
+                        </ul>
+                    </div>
+                    <div class="image-side"><img src="stamina.jpg" alt="Stamina Training Custom Artwork Panel"></div>
+                </div>
+
+                <!-- 3. POWER -->
+                <div class="zigzag-row">
+                    <div class="info-side" style="border-left: 5px solid var(--cardOrange); padding-left: 1.25rem;">
+                        <h3 class="module-title" style="color: var(--cardOrange);">💪 Power Training (パワー)</h3>
+                        <p class="module-text">
+                            Power controls torque, acceleration bursts, and overtaking force. High power allows a horse girl to burst out of the starting gate cleanly and weave safely through tight clusters of rival runners.
+                        </p>
+                        <ul class="stat-list">
+                            <li>Primary Target: Acceleration & Overtaking Force</li>
+                            <li>Secondary Gain: +Stamina Sub-points</li>
+                        </ul>
+                    </div>
+                    <div class="image-side"><img src="power.jpg" alt="Power Training Custom Artwork Panel"></div>
+                </div>
+
+                <!-- 4. GUTS (REVERSED) -->
+                <div class="zigzag-row reverse">
+                    <div class="info-side" style="border-right: 5px solid var(--cardRose); padding-right: 1.25rem; text-align: right;">
+                        <h3 class="module-title" style="color: var(--cardRose);">❤️ Guts Training (根性)</h3>
+                        <p class="module-text">
+                            Guts govern your runner's mental fortitude, tenacity, and energy efficiency when under pressure. High guts metrics help horse girls withstand late fatigue and maintain peak racing momentum during intense, head-to-head home stretch sprints.
+                        </p>
+                        <ul class="stat-list" style="align-items: flex-end;">
+                            <li>Primary Target: Home Stretch Endurance & Fuel Efficiency</li>
+                            <li>Secondary Gain: +Speed & Power Sub-points</li>
+                        </ul>
+                    </div>
+                    <div class="image-side"><img src="guts.jpg" alt="Guts Training Custom Artwork Panel"></div>
+                </div>
+
+                <!-- 5. WIT -->
+                <div class="zigzag-row">
+                    <div class="info-side" style="border-left: 5px solid var(--cardPurple); padding-left: 1.25rem;">
+                        <h3 class="module-title" style="color: var(--cardPurple);">🎓 Wit Training (賢さ)</h3>
+                        <p class="module-text">
+                            Wit (Intelligence) dictates race awareness, positioning choices, and skill trigger check odds. High wit prevents horse girls from tracking into bad paths, reduces the risk of random panic anomalies, and keeps them in optimal position throughout the race.
+                        </p>
+                        <ul class="stat-list">
+                            <li>Primary Target: Tactical Awareness & Skill Activation Odds</li>
+                            <li>Secondary Gain: +Energy Recovery Actions</li>
+                        </ul>
+                    </div>
+                    <div class="image-side"><img src="wit.jpg" alt="Wit Training Custom Artwork Panel"></div>
+                </div>
+
+                <!-- NEW INTERNAL PANEL BOTTOM CLOSE TRIGGER BUTTON -->
+                <div style="text-align: center; margin-top: 1rem; width: 100%;">
+                    <button id="masterDropdownCloseBtn" style="background-color: var(--umaPink); color: white; border: none; font-weight: bold; padding: 0.6rem 2rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 107, 129, 0.25);">▲ Collapse Curriculum</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BOTTOM PREVIEW DECK ROUTING BUTTONS LINK BLOCK -->
+        <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; flex-shrink: 0;">
+            <a href="roster.html" class="route-panel-btn">Go to Horse Girls Roster</a>
+            <a href="contact.html" class="route-panel-btn">Join Tracen Club Form </a>
+        </div>
+        
+    </main>
+
+      <!-- SOLID BASE SYSTEM FOOTER -->
+    <footer>
+        <p style="margin: 0; padding: 0; color: white !important; font-weight: 600; letter-spacing: 0.5px;">&copy; <span id="currentYear"></span> UmaMusume Fan Database.</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    
+    <!-- Forced Inline Interactive About Master Dropdown Engine Injection -->
+    <script>
+        (function() {
+            const yearSpan = document.getElementById("currentYear");
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Mobile Navigation Toggle Controller Menu
+            const menuToggle = document.getElementById("menuToggle");
+            const navMenu = document.getElementById("navMenu");
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener("click", function() {
+                    navMenu.classList.toggle("show");
+                    menuToggle.textContent = navMenu.classList.contains("show") ? "✕" : "☰";
+                });
+            }
+
+            // SINGLE MAIN ACCORDION DROPDOWN ENGINE CONTROLLER
+            const masterBtn = document.getElementById("masterDropdownBtn");
+            const masterCloseBtn = document.getElementById("masterDropdownCloseBtn"); // NEW BUTTON HOOK
+            const masterContent = document.getElementById("masterDropdownContent");
+            const masterIcon = document.getElementById("masterIcon");
+
+            if (masterBtn && masterContent && masterIcon) {
+                // Shared close logic routine
+                const collapsePanel = function() {
+                    masterContent.style.display = "none";
+                    masterIcon.textContent = "▼";
+                    masterIcon.style.transform = "rotate(0deg)";
+                };
+
+                masterBtn.addEventListener("click", function() {
+                    const isOpen = masterContent.style.display === "flex";
+                    if (isOpen) {
+                        collapsePanel();
+                    } else {
+                        masterContent.style.display = "flex";
+                        masterIcon.textContent = "▲";
+                        masterIcon.style.transform = "rotate(180deg)";
+                    }
+                });
+
+                // Attach event click listener explicitly to the new bottom collapse button
+                if (masterCloseBtn) {
+                    masterCloseBtn.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        collapsePanel();
+                        // Smoothly scroll the container back up to the top of the curriculum block
+                        masterBtn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
+

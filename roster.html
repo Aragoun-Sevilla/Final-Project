@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card List | Uma Musume Portal</title>
+    
+    <!-- Stable fallback layout stylesheet -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        :root {
+            --umaPink: #ff6b81; 
+            --umaBg: #f5f6fa;
+            --cardRed: #eb4d4b; 
+            --cardYellow: #f1c40f;
+            --cardOrange: #e67e22; 
+            --cardRose: #ff7675; 
+            --cardPurple: #6c5ce7;
+        }
+        
+        body { 
+            background-image: url('wallpaper.jpg') !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; 
+            margin: 0; 
+            padding: 0;
+            
+            height: 100vh !important;
+            max-height: 100vh !important;
+            overflow: hidden !important; 
+            
+            display: grid !important;
+            grid-template-rows: auto 1fr auto !important; 
+        }
+        
+        header { 
+            background-color: var(--umaPink) !important; 
+            color: white !important; 
+            padding: 1rem 5% !important; 
+            border: none !important; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        header a, header h2 { color: white !important; text-decoration: none !important; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; padding: 0; margin: 0; }
+        .search-input { border-radius: 9999px !important; padding: 0.4rem 1rem !important; border: none !important; width: 250px; }
+        
+        .main-container { 
+            max-width: 1400px; 
+            width: 95%; 
+            margin: 1rem auto !important; 
+            background-color: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(8px);
+            padding: 1.5rem !important;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-sizing: border-box;
+            
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+            height: calc(100% - 2rem); 
+        }
+        
+        .scrollable-grid-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .scrollable-grid-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scrollable-grid-container::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        .scrollable-grid-container::-webkit-scrollbar-thumb {
+            background: var(--umaPink);
+            border-radius: 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+        
+        .gacha-card {
+            background: white !important;
+            border-radius: 14px !important;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e8ecef;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .gacha-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .img-container {
+            height: 420px !important;
+            background-color: #ffeef0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .img-container img { 
+            width: 100% !important; 
+            height: 100% !important; 
+            object-fit: cover !important; 
+            object-position: top center !important; 
+        }
+        
+        .badge-1st {
+            position: absolute; top: 10px; left: 10px;
+            background: #f1c40f; color: #111; font-weight: 900;
+            padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; z-index: 5;
+        }
+        
+        .card-body { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; }
+        .card-title { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #222; }
+        .card-desc { font-size: 0.78rem; color: #666; line-height: 1.5; margin: 0 0 1.25rem 0; flex: 1; }
+        
+        .card-btn {
+            width: 100%; border: none !important; color: white !important;
+            font-weight: bold !important; font-size: 0.8rem !important;
+            padding: 0.6rem !important; border-radius: 8px !important; cursor: pointer;
+        }
+        
+        footer { 
+            background-color: var(--umaPink) !important; 
+            color: white !important; 
+            text-align: center; 
+            padding: 1rem !important; 
+            font-size: 0.8rem; 
+            width: 100%;
+            border: none !important;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        
+        .menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            body { overflow: auto !important; height: auto !important; max-height: none !important; display: flex !important; flex-direction: column !important; } 
+            .main-container { overflow: visible; height: auto !important; margin: 1rem auto !important; }
+            .scrollable-grid-container { overflow: visible; }
+            .menu-btn { display: block; }
+            .nav-container { display: none; width: 100%; }
+            .nav-container.show { display: block; }
+            .nav-links { flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+            header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="row">
+        <div class="col-sm-12 col-md flex-stretch" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h2 style="margin: 0; font-weight: 800;">Argon Sevs Training Portal</h2>
+            <button class="menu-btn" id="menuToggle">☰</button>
+        </div>
+        <div class="col-sm-12 col-md nav-container" id="navMenu" style="display: flex; align-items: center; justify-content: flex-end; gap: 2rem; width: 100%;">
+            <input type="text" id="cardSearch" placeholder="Search for a racer..." class="search-input">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="roster.html" style="border-bottom: 2px solid white; font-weight: bold;">Horse Girls</a></li>
+                    <li><a href="contact.html">Join Club</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <main class="main-container">
+        <h4 style="text-align: center; color: #475569; letter-spacing: 2px; font-weight: 900; margin-bottom: 0.5rem; text-shadow: 0 1px 2px rgba(255,255,255,0.8);">CARD LIST</h4>
+        
+        <!-- PURE ENGLISH STRATEGY FILTER TOOLBAR CONTROLS -->
+        <div style="display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <button class="filter-btn active" data-style="all" style="background: #475569; color: white; border: none; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: bold; font-size: 0.75rem; cursor: pointer;">All</button>
+            <button class="filter-btn" data-style="runner" style="background: white; color: #475569; border: 1px solid #cbd5e1; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: bold; font-size: 0.75rem; cursor: pointer;">Front-Runner</button>
+            <button class="filter-btn" data-style="leader" style="background: white; color: #475569; border: 1px solid #cbd5e1; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: bold; font-size: 0.75rem; cursor: pointer;">Pace Chaser</button>
+            <button class="filter-btn" data-style="betweener" style="background: white; color: #475569; border: 1px solid #cbd5e1; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: bold; font-size: 0.75rem; cursor: pointer;">Late-Surger</button>
+            <button class="filter-btn" data-style="chaser" style="background: white; color: #475569; border: 1px solid #cbd5e1; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: bold; font-size: 0.75rem; cursor: pointer;">End-Closer</button>
+        </div>
+        
+        <!-- SINGLE INTERNAL SCROLLABLE GRID BOX -->
+        <div class="scrollable-grid-container">
+            <div class="card-grid">
+                
+                <!-- 1. Gold Ship -->
+                <div class="gacha-card" data-strategy="chaser runner">
+                    <div class="img-container">
+                        <img src="goldship.jpg" alt="Gold Ship Custom Profile Image">
+                        <div class="badge-1st">1ST</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Gold Ship</h3>
+                        <p class="card-desc">An eccentric, wildly unpredictable runner who dominates stamina blocks.</p>
+                        <button class="card-btn profile-trigger" data-name="Gold Ship" data-strategy="End-Closer / Front-Runner" data-stat="Stamina: SS | Speed: A" data-img="goldship_ready.jpg" style="background: var(--cardRed) !important;">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- 2. T.M. Opera O -->
+                <div class="gacha-card" data-strategy="leader">
+                    <div class="img-container">
+                        <img src="operao.jpg" alt="T.M. Opera O Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">T.M. Opera O</h3>
+                        <p class="card-desc">A self-proclaimed dramatic and theatrical stage center race winner.</p>
+                        <button class="card-btn profile-trigger" data-name="T.M. Opera O" data-strategy="Pace Chaser" data-stat="Speed: S | Power: A+" data-img="operao_ready.jpg" style="background: var(--cardYellow) !important; color: #111 !important;">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- 3. Maruzensky -->
+                <div class="gacha-card" data-strategy="runner">
+                    <div class="img-container">
+                        <img src="maruzensky.jpg" alt="Maruzensky Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Maruzensky</h3>
+                        <p class="card-desc">Sophisticated runner who loves high-speed modules and sports styling.</p>
+                        <button class="card-btn profile-trigger" data-name="Maruzensky" data-strategy="Front-Runner" data-stat="Speed: SS | Guts: B" data-img="maruzensky_ready.jpg" style="background: var(--cardOrange) !important;">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- 4. Haru Urara -->
+                <div class="gacha-card" data-strategy="betweener">
+                    <div class="img-container">
+                        <img src="urara.jpg" alt="Haru Urara Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Haru Urara</h3>
+                        <p class="card-desc">Exceptionally cheerful and optimistic, she never yields to loss streaks.</p>
+                        <button class="card-btn profile-trigger" data-name="Haru Urara" data-strategy="Late-Surger" data-stat="Stamina: B | Determination: EX" data-img="urara_ready.jpg" style="background: var(--cardRose) !important;">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- 5. Rice Shower -->
+                <div class="gacha-card" data-strategy="leader betweener">
+                    <div class="img-container">
+                        <img src="rice.jpg" alt="Rice Shower Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Rice Shower</h3>
+                        <p class="card-desc">Timid and soft-spoken but holds immense speed focus on the turf tracks.</p>
+                        <button class="card-btn profile-trigger" data-name="Rice Shower" data-strategy="Pace Chaser / Late-Surger" data-stat="Stamina: A+ | Willpower: S" data-img="rice_ready.jpg" style="background: var(--cardPurple) !important;">View Profile</button>
+                    </div>
+                </div>
+                <!-- 6. Almond Eye -->
+                <div class="gacha-card" data-strategy="leader betweener">
+                    <div class="img-container">
+                        <img src="almondeye.jpg" alt="Almond Eye Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Almond Eye</h3>
+                        <p class="card-desc">The modern record-breaking queen. Possesses an explosive closing burst.</p>
+                        <button class="card-btn profile-trigger" data-name="Almond Eye" data-strategy="Pace Chaser / Late-Surger" data-stat="Speed: SS | Power: S" data-img="almondeye_ready.jpg" style="background: var(--cardRed) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 7. King Halo -->
+                <div class="gacha-card" data-strategy="betweener chaser">
+                    <div class="img-container">
+                        <img src="kinghalo.jpg" alt="King Halo Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">King Halo</h3>
+                        <p class="card-desc">A proud, elite-born young lady who handles short-to-medium sprints with absolute style.</p>
+                        <button class="card-btn profile-trigger" data-name="King Halo" data-strategy="Late-Surger / End-Closer" data-stat="Speed: S+ | Guts: A+" data-img="kinghalo_ready.jpg" style="background: var(--cardPurple) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 8. Oguri Cap -->
+                <div class="gacha-card" data-strategy="leader betweener">
+                    <div class="img-container">
+                        <img src="oguricap.jpg" alt="Oguri Cap Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Oguri Cap</h3>
+                        <p class="card-desc">The legendary miracle runner from the countryside. Known for an insatiable appetite.</p>
+                        <button class="card-btn profile-trigger" data-name="Oguri Cap" data-strategy="Pace Chaser / Late-Surger" data-stat="Speed: S | Power: S+" data-img="oguricap_ready.jpg" style="background: var(--cardOrange) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 9. Mejiro McQueen -->
+                <div class="gacha-card" data-strategy="leader runner">
+                    <div class="img-container">
+                        <img src="mejiro.jpg" alt="Mejiro McQueen Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Mejiro McQueen</h3>
+                        <p class="card-desc">An elegant and noble lady of the prestigious Mejiro family. Built for grueling long distances.</p>
+                        <button class="card-btn profile-trigger" data-name="Mejiro McQueen" data-strategy="Pace Chaser / Front-Runner" data-stat="Stamina: SS | Intelligence: A+" data-img="mejiro_ready.jpg" style="background: var(--cardYellow) !important; color: #111 !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 10. Symboli Rudolph -->
+                <div class="gacha-card" data-strategy="leader betweener">
+                    <div class="img-container">
+                        <img src="symbolirudolph.jpg" alt="Symboli Rudolph Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Symboli Rudolph</h3>
+                        <p class="card-desc">The highly respected Student Council President, famously known as the 'Emperor'.</p>
+                        <button class="card-btn profile-trigger" data-name="Symboli Rudolph" data-strategy="Pace Chaser / Late-Surger" data-stat="Speed: S | Intelligence: SS" data-img="symbolirudolph_ready.jpg" style="background: var(--cardRed) !important;">View Profile</button>
+                    </div>
+                </div>
+                <!-- 11. Manhattan Cafe -->
+                <div class="gacha-card" data-strategy="betweener chaser">
+                    <div class="img-container">
+                        <img src="manhattancafe.jpg" alt="Manhattan Cafe Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Manhattan Cafe</h3>
+                        <p class="card-desc">A quiet, mysterious girl who claims to see invisible friends. Excels late in long races.</p>
+                        <button class="card-btn profile-trigger" data-name="Manhattan Cafe" data-strategy="Late-Surger / End-Closer" data-stat="Stamina: S+ | Power: A+" data-img="manhattancafe_ready.jpg" style="background: var(--cardPurple) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 12. Satono Diamond -->
+                <div class="gacha-card" data-strategy="leader">
+                    <div class="img-container">
+                        <img src="satonodiamond.jpg" alt="Satono Diamond Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Satono Diamond</h3>
+                        <p class="card-desc">A pampered yet determined rich young lady seeking to fulfill her family's G1 racing dreams.</p>
+                        <button class="card-btn profile-trigger" data-name="Satono Diamond" data-strategy="Pace Chaser" data-stat="Stamina: S | Intelligence: S" data-img="satonodiamond_ready.jpg" style="background: var(--cardRose) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 13. Kitasan Black -->
+                <div class="gacha-card" data-strategy="runner leader">
+                    <div class="img-container">
+                        <img src="kitasanblack.jpg" alt="Kitasan Black Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Kitasan Black</h3>
+                        <p class="card-desc">A high-energy, community-loving festival girl who dominates front-running pacing splits.</p>
+                        <button class="card-btn profile-trigger" data-name="Kitasan Black" data-strategy="Front-Runner / Pace Chaser" data-stat="Speed: SS | Stamina: A+" data-img="kitasanblack_ready.jpg" style="background: var(--cardOrange) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 14. Tamamo Cross -->
+                <div class="gacha-card" data-strategy="chaser betweener">
+                    <div class="img-container">
+                        <img src="tamamocross.jpg" alt="Tamamo Cross Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Tamamo Cross</h3>
+                        <p class="card-desc">A fierce, tiny lightning bolt from Kansai. Unleashes intense closing speed against rivals.</p>
+                        <button class="card-btn profile-trigger" data-name="Tamamo Cross" data-strategy="End-Closer / Late-Surger" data-stat="Speed: S+ | Guts: S" data-img="tamamocross_ready.jpg" style="background: var(--cardRose) !important;">View Profile</button>
+                    </div>
+                </div>
+
+                <!-- 15. Meisho Doto -->
+                <div class="gacha-card" data-strategy="leader betweener">
+                    <div class="img-container">
+                        <img src="meishodoto.jpg" alt="Meisho Doto Custom Profile Image">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Meisho Doto</h3>
+                        <p class="card-desc">An incredibly clumsy and anxious runner who fights through low confidence to finish strong.</p>
+                        <button class="card-btn profile-trigger" data-name="Meisho Doto" data-strategy="Pace Chaser / Late-Surger" data-stat="Stamina: A+ | Power: S" data-img="meishodoto_ready.jpg" style="background: var(--cardYellow) !important; color: #111 !important;">View Profile</button>
+                    </div>
+                </div>
+            </div> 
+        </div>     
+</main> 
+
+    <!-- POPUP DIALOG CONTAINER (Sits completely outside the white container limits) -->
+    <div id="profileModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+        <div style="background: white; max-width: 750px; width: 100%; border-radius: 20px; padding: 2rem; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative; border-top: 8px solid var(--umaPink); display: flex; gap: 2rem; align-items: stretch;">
+            <button id="closeModal" style="position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #aaa; z-index: 10;">&times;</button>
+            
+            <div style="flex: 1; min-width: 280px; max-width: 320px;">
+                <img id="modalImg" src="" alt="Full Dress Portrait Panel" style="width: 100%; height: 420px; object-fit: cover; border-radius: 12px; background-color: #f5f6fa; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            </div>
+            
+            <div style="flex: 1.2; display: flex; flex-direction: column; justify-content: center;">
+                <h2 id="modalName" style="margin: 0 0 0.5rem 0; font-weight: 900; color: #111; font-size: 2.2rem; tracking-tight;">Character Name</h2>
+                <div style="margin-bottom: 1.25rem; display: inline-block;">
+                    <span id="modalStrategy" style="background: #fff0f2; color: var(--umaPink); font-size: 0.85rem; font-weight: bold; padding: 6px 14px; border-radius: 20px;">Strategy</span>
+                </div>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 1.25rem 0;">
+                <h4 style="margin: 0 0 0.5rem 0; font-weight: bold; color: #475569; font-size: 1.1rem;">Training Attributes:</h4>
+                <p id="modalStats" style="font-family: monospace; font-size: 1.1rem; color: #1e293b; background: #f8fafc; padding: 1rem; border-radius: 10px; border: 1px solid #e2e8f0; font-weight: bold; letter-spacing: 0.5px; margin: 0 0 1.5rem 0;">Stats Loading...</p>
+                <button id="modalActionBtn" class="card-btn" style="background: var(--umaPink) !important; width: 100%; padding: 0.9rem !important; font-size: 1rem !important; border-radius: 12px !important; margin-top: auto;">Close Dossier</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOLID BASE SYSTEM FOOTER: Securely rendered flat across the bottom screen line -->
+    <footer>
+        <p style="margin: 0; padding: 0; color: white !important; font-weight: 600; letter-spacing: 0.5px;">&copy; <span id="currentYear"></span> UmaMusume Fan Database.</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    
+    <!-- Forced Inline Interactive Card Engine Injection -->
+    <script>
+        (function() {
+            const yearSpan = document.getElementById("currentYear");
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            const profileModal = document.getElementById("profileModal");
+            const modalName = document.getElementById("modalName");
+            const modalStrategy = document.getElementById("modalStrategy");
+            const modalStats = document.getElementById("modalStats");
+            const modalImg = document.getElementById("modalImg"); 
+            const closeModal = document.getElementById("closeModal");
+            const modalActionBtn = document.getElementById("modalActionBtn");
+            const triggers = document.querySelectorAll(".profile-trigger");
+
+            const hideModal = function() { 
+                if (profileModal) profileModal.style.display = "none"; 
+            };
+
+            if (profileModal && modalName && modalStrategy && modalStats && modalImg) {
+                triggers.forEach(button => {
+                    button.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        const name = this.getAttribute("data-name");
+                        const strategy = this.getAttribute("data-strategy");
+                        const stats = this.getAttribute("data-stat");
+                        const imgSource = this.getAttribute("data-img"); 
+
+                        modalName.textContent = name;
+                        modalStrategy.textContent = strategy;
+                        modalStats.textContent = stats;
+                        modalImg.src = imgSource; 
+
+                        profileModal.style.setProperty("display", "flex", "important");
+                    });
+                });
+
+                if (closeModal) closeModal.addEventListener("click", hideModal);
+                if (modalActionBtn) modalActionBtn.addEventListener("click", hideModal);
+                profileModal.addEventListener("click", function(e) {
+                    if (e.target === profileModal) hideModal();
+                });
+                window.addEventListener("keydown", function(e) {
+                    if (e.key === "Escape") { hideModal(); }
+                });
+            }
+
+            // Real-Time Search & Strategy Button Controllers
+            const searchBar = document.getElementById("cardSearch");
+            const strategyButtons = document.querySelectorAll(".filter-btn");
+            const characterCards = document.querySelectorAll(".gacha-card");
+
+            let activeTextFilter = "";
+            let activeStrategyFilter = "all";
+
+            function updateCardVisibility() {
+                characterCards.forEach(card => {
+                    const titleElement = card.querySelector(".card-title");
+                    const cardStrategies = card.getAttribute("data-strategy") || "";
+                    
+                    const nameMatches = titleElement ? titleElement.textContent.toLowerCase().includes(activeTextFilter) : true;
+                    const strategyMatches = (activeStrategyFilter === "all") || cardStrategies.includes(activeStrategyFilter);
+
+                    if (nameMatches && strategyMatches) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            }
+
+            if (searchBar) {
+                searchBar.addEventListener("input", function(e) {
+                    activeTextFilter = e.target.value.toLowerCase().trim();
+                    updateCardVisibility();
+                });
+            }
+
+            strategyButtons.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    strategyButtons.forEach(b => {
+                        b.style.background = "white";
+                        b.style.color = "#475569";
+                    });
+                    this.style.background = "#475569";
+                    this.style.color = "white";
+
+                    activeStrategyFilter = this.getAttribute("data-style");
+                    updateCardVisibility();
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
