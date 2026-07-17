@@ -381,7 +381,7 @@
                     </div>
                 </div>
 
-                <!-- 15. Meisho Doto -->
+                                <!-- 15. Meisho Doto -->
                 <div class="gacha-card" data-strategy="leader betweener">
                     <div class="img-container">
                         <img src="meishodoto.jpg" alt="Meisho Doto Custom Profile Image">
@@ -393,10 +393,11 @@
                     </div>
                 </div>
             </div> 
-        </div>     
-</main> 
+        </div>
+    </main> 
 
-    <!-- POPUP DIALOG CONTAINER (Sits completely outside the white container limits) -->
+
+        <!-- POPUP DIALOG CONTAINER (Sits completely outside the white container limits) -->
     <div id="profileModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
         <div style="background: white; max-width: 750px; width: 100%; border-radius: 20px; padding: 2rem; box-shadow: 0 15px 35px rgba(0,0,0,0.3); position: relative; border-top: 8px solid var(--umaPink); display: flex; gap: 2rem; align-items: stretch;">
             <button id="closeModal" style="position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: #aaa; z-index: 10;">&times;</button>
@@ -418,14 +419,16 @@
         </div>
     </div>
 
-    <!-- SOLID BASE SYSTEM FOOTER: Securely rendered flat across the bottom screen line -->
-    <footer>
-        <p style="margin: 0; padding: 0; color: white !important; font-weight: 600; letter-spacing: 0.5px;">&copy; <span id="currentYear"></span> UmaMusume Fan Database.</p>
-    </footer>
+    <!-- CLEAN SOLID BASE SYSTEM FOOTER BAR DECK CONTAINER -->
+    <div style="background-color: #ff6b81 !important; text-align: center !important; padding: 1rem !important; flex-shrink: 0 !important; width: 100% !important; box-sizing: border-box !important; border: none !important;">
+        <p style="margin: 0 !important; padding: 0 !important; color: white !important; font-weight: 700 !important; font-size: 14px !important; line-height: normal !important; display: block !important;">
+            &copy; <span id="currentYear"></span> UmaMusume Fan Database.
+        </p>
+    </div>
     
     <script src="js/main.js"></script>
     
-    <!-- Forced Inline Interactive Card Engine Injection -->
+    <!-- Complete Interactive Card Engine Processing Logic (Safe & Active) -->
     <script>
         (function() {
             const yearSpan = document.getElementById("currentYear");
@@ -520,3 +523,4 @@
     </script>
 </body>
 </html>
+
