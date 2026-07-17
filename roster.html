@@ -37,14 +37,23 @@
             grid-template-rows: auto 1fr auto !important; 
         }
         
-        header { 
+            header { 
             background-color: var(--umaPink) !important; 
             color: white !important; 
-            padding: 1rem 5% !important; 
+            padding: 0 5% !important; 
             border: none !important; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-            width: 100%;
-            box-sizing: border-box;
+            width: 100% !important;
+            box-sizing: border-box !important;
+    
+            height: 65px !important;
+            min-height: 65px !important;
+            max-height: 65px !important;
+            
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
         }
         
         header a, header h2 { color: white !important; text-decoration: none !important; }
