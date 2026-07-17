@@ -113,12 +113,17 @@
             border-radius: 10px;
         }
 
+        
         .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            width: 100%;
+            display: grid !important;
+
+            grid-template-columns: repeat(auto-fill, 280px) !important;
+            gap: 1.5rem !important; 
+            width: 100% !important;
+
+            justify-content: center !important; 
         }
+
         
         .gacha-card {
             background: white !important;
