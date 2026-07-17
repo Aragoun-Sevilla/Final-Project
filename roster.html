@@ -168,23 +168,21 @@
             padding: 0.6rem !important; border-radius: 8px !important; cursor: pointer;
         }
         
+           
         footer { 
             background-color: var(--umaPink) !important; 
-            color: white !important; 
-            text-align: center !important; 
-            font-size: 0.8rem !important; 
-            width: 100% !important;
             border: none !important;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
-            box-sizing: border-box !important;
-            flex-shrink: 0 !important;
-        
-            height: auto !important;
-            min-height: unset !important;
-            max-height: none !important;
-            line-height: normal !important;
-            padding: 1rem !important; 
+            height: 50px !important;
+            text-align: center !important; 
         }
+        footer p {
+            margin: 0 !important;
+            color: white !important; 
+            font-weight: 700 !important; 
+            font-size: 14px !important; 
+            line-height: 50px !important; 
+        }
+
 
         
         .menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
@@ -244,7 +242,7 @@
                 <div class="gacha-card" data-strategy="chaser runner">
                     <div class="img-container">
                         <img src="goldship.jpg" alt="Gold Ship Custom Profile Image">
-                        <div class="badge-1st">1ST</div>
+                        <div class="badge-1st">#1</div>
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">Gold Ship</h3>
@@ -444,10 +442,12 @@
         </div>
     </div>
 
-    <!-- SOLID BASE SYSTEM FOOTER: Securely rendered flat across the bottom screen line -->
+    
+        <!-- Clean, Shortened Base System Footer -->
     <footer>
-        <p style="margin: 0; padding: 0; color: white !important; font-weight: 600; letter-spacing: 0.5px;">&copy; <span id="currentYear"></span> UmaMusume Fan Database.</p>
+        <p>&copy; <span id="currentYear"></span> UmaMusume Fan Database.</p>
     </footer>
+
     
     <script src="js/main.js"></script>
     
